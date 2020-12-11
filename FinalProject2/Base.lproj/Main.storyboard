@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -112,10 +113,36 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uor-tm-4eS" secondAttribute="height" multiplier="314:121" id="0mI-SN-Aa1"/>
                                 </constraints>
+                                <locale key="locale" localeIdentifier="ru"/>
                             </datePicker>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8qW-v6-SG2">
                                 <rect key="frame" x="20" y="221" width="374" height="451"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="indexCell" id="rzH-gU-nOH" customClass="dairyTableViewCell" customModule="FinalProject2" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="374" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rzH-gU-nOH" id="A0A-d1-Sma">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AF-CO-Fy6">
+                                                    <rect key="frame" x="166" y="11.5" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2AF-CO-Fy6" firstAttribute="centerX" secondItem="A0A-d1-Sma" secondAttribute="centerX" id="LFH-QT-0jZ"/>
+                                                <constraint firstItem="2AF-CO-Fy6" firstAttribute="centerY" secondItem="A0A-d1-Sma" secondAttribute="centerY" id="TVs-5l-cBB"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellNote" destination="2AF-CO-Fy6" id="eGe-0B-vGe"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zkD-Qv-ZGg">
                                 <rect key="frame" x="208" y="80" width="186" height="91"/>
@@ -124,27 +151,41 @@
                                 </constraints>
                             </pickerView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZA-cI-JT3">
-                                <rect key="frame" x="20" y="179" width="374" height="34"/>
+                                <rect key="frame" x="20" y="179" width="320" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="nZA-cI-JT3" secondAttribute="height" multiplier="11:1" id="6dC-14-Zlh"/>
+                                    <constraint firstAttribute="width" secondItem="nZA-cI-JT3" secondAttribute="height" multiplier="11:1" constant="-54" id="6dC-14-Zlh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMB-Sv-cXA">
+                                <rect key="frame" x="348" y="174" width="46" height="45"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="plus.circle" catalog="system" symbolScale="large" renderingMode="original"/>
+                                </state>
+                                <connections>
+                                    <action selector="addNote:" destination="Qt5-XL-SmL" eventType="touchUpInside" id="o13-qm-Wq5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qvk-gJ-5hD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8qW-v6-SG2" firstAttribute="centerX" secondItem="lMg-G3-SrH" secondAttribute="centerX" id="0RL-w4-aB9"/>
+                            <constraint firstItem="Qvk-gJ-5hD" firstAttribute="trailing" secondItem="sMB-Sv-cXA" secondAttribute="trailing" constant="20" id="3tY-g1-gIN"/>
+                            <constraint firstItem="sMB-Sv-cXA" firstAttribute="leading" secondItem="nZA-cI-JT3" secondAttribute="trailing" constant="8" symbolic="YES" id="5Xo-il-WlY"/>
                             <constraint firstItem="8qW-v6-SG2" firstAttribute="leading" secondItem="Qvk-gJ-5hD" secondAttribute="leading" constant="20" id="76w-ed-ilX"/>
                             <constraint firstItem="Qvk-gJ-5hD" firstAttribute="trailing" secondItem="Grt-m2-8F1" secondAttribute="trailing" constant="20" id="7li-p2-tbw"/>
                             <constraint firstItem="nHv-QR-55G" firstAttribute="leading" secondItem="Qvk-gJ-5hD" secondAttribute="leading" constant="20" id="AX4-4v-KtW"/>
                             <constraint firstItem="Grt-m2-8F1" firstAttribute="leading" secondItem="Qvk-gJ-5hD" secondAttribute="leading" constant="20" id="F4n-4O-xp5"/>
-                            <constraint firstItem="Qvk-gJ-5hD" firstAttribute="trailing" secondItem="nZA-cI-JT3" secondAttribute="trailing" constant="20" id="IfW-d3-EgK"/>
+                            <constraint firstItem="Qvk-gJ-5hD" firstAttribute="trailing" secondItem="nZA-cI-JT3" secondAttribute="trailing" constant="74" id="IfW-d3-EgK"/>
                             <constraint firstItem="nZA-cI-JT3" firstAttribute="leading" secondItem="Qvk-gJ-5hD" secondAttribute="leading" constant="20" id="Ki4-vj-0JO"/>
                             <constraint firstItem="Grt-m2-8F1" firstAttribute="top" secondItem="Qvk-gJ-5hD" secondAttribute="top" constant="10" id="MtD-6F-zNw"/>
                             <constraint firstItem="Qvk-gJ-5hD" firstAttribute="trailing" secondItem="zkD-Qv-ZGg" secondAttribute="trailing" constant="20" id="RK2-NR-Fbb"/>
                             <constraint firstItem="zkD-Qv-ZGg" firstAttribute="centerY" secondItem="nHv-QR-55G" secondAttribute="centerY" id="a2x-8B-3mg"/>
+                            <constraint firstItem="8qW-v6-SG2" firstAttribute="top" secondItem="sMB-Sv-cXA" secondAttribute="bottom" constant="2" id="e1v-cV-n3p"/>
+                            <constraint firstItem="sMB-Sv-cXA" firstAttribute="top" secondItem="zkD-Qv-ZGg" secondAttribute="bottom" constant="3" id="eDL-IL-eL0"/>
                             <constraint firstItem="Qvk-gJ-5hD" firstAttribute="trailing" secondItem="8qW-v6-SG2" secondAttribute="trailing" constant="20" id="eb4-Fu-Hcr"/>
                             <constraint firstItem="Qvk-gJ-5hD" firstAttribute="bottom" secondItem="uor-tm-4eS" secondAttribute="bottom" constant="10" id="f0o-Yi-f33"/>
                             <constraint firstItem="8qW-v6-SG2" firstAttribute="centerY" secondItem="lMg-G3-SrH" secondAttribute="centerY" constant="-1.5" id="gPX-BS-KkJ"/>
@@ -162,6 +203,7 @@
                         <outlet property="datePicker" destination="uor-tm-4eS" id="wyX-w0-9sm"/>
                         <outlet property="emotionPicker" destination="nHv-QR-55G" id="lp9-lZ-wM9"/>
                         <outlet property="myLabel" destination="Grt-m2-8F1" id="igD-bl-iP1"/>
+                        <outlet property="plusButton" destination="sMB-Sv-cXA" id="Qvu-rM-VaS"/>
                         <outlet property="ratePicker" destination="zkD-Qv-ZGg" id="L7x-1v-sBO"/>
                         <outlet property="tableNotes" destination="8qW-v6-SG2" id="vzg-NF-OJs"/>
                     </connections>
@@ -302,6 +344,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="8xw-cB-1I4" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bVO-iY-Gm4">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" systemColor="opaqueSeparatorColor"/>
@@ -338,6 +381,7 @@
     <resources>
         <image name="book" catalog="system" width="128" height="102"/>
         <image name="filemenu.and.cursorarrow" catalog="system" width="128" height="96"/>
+        <image name="plus.circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

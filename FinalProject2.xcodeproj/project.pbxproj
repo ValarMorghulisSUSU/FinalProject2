@@ -15,6 +15,7 @@
 		04044B592582530900A0FAC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04044B572582530900A0FAC2 /* LaunchScreen.storyboard */; };
 		04044B74258254E300A0FAC2 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04044B73258254E300A0FAC2 /* SummaryViewController.swift */; };
 		04044B77258254F000A0FAC2 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04044B76258254F000A0FAC2 /* NotesViewController.swift */; };
+		04FB34912583BDE8007164FC /* diaryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FB34902583BDE8007164FC /* diaryCellTableViewCell.swift */; };
 		5085CFE94BC71A19E9A64404 /* Pods_FinalProject2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C69157C52EC1EE3EE1740656 /* Pods_FinalProject2.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		04044B5A2582530900A0FAC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04044B73258254E300A0FAC2 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		04044B76258254F000A0FAC2 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		04FB34902583BDE8007164FC /* diaryCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryCellTableViewCell.swift; sourceTree = "<group>"; };
 		5978BA4E015FABF4C58DAEB8 /* Pods-FinalProject2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject2.release.xcconfig"; path = "Target Support Files/Pods-FinalProject2/Pods-FinalProject2.release.xcconfig"; sourceTree = "<group>"; };
 		C1ABB305DCF24FC1B2007105 /* Pods-FinalProject2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject2.debug.xcconfig"; path = "Target Support Files/Pods-FinalProject2/Pods-FinalProject2.debug.xcconfig"; sourceTree = "<group>"; };
 		C69157C52EC1EE3EE1740656 /* Pods_FinalProject2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProject2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,7 @@
 		04044B4B2582530800A0FAC2 /* FinalProject2 */ = {
 			isa = PBXGroup;
 			children = (
+				04FB348F2583BDC4007164FC /* Delegates */,
 				04044B71258254B400A0FAC2 /* Controllers */,
 				04044B4C2582530800A0FAC2 /* AppDelegate.swift */,
 				04044B4E2582530800A0FAC2 /* SceneDelegate.swift */,
@@ -86,6 +89,14 @@
 				04044B76258254F000A0FAC2 /* NotesViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		04FB348F2583BDC4007164FC /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				04FB34902583BDE8007164FC /* diaryCellTableViewCell.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		35B246CBF5511C5E9C533FC3 /* Frameworks */ = {
@@ -224,6 +235,7 @@
 				04044B4D2582530800A0FAC2 /* AppDelegate.swift in Sources */,
 				04044B4F2582530800A0FAC2 /* SceneDelegate.swift in Sources */,
 				04044B74258254E300A0FAC2 /* SummaryViewController.swift in Sources */,
+				04FB34912583BDE8007164FC /* diaryCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
