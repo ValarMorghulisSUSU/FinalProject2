@@ -19,10 +19,11 @@ extension UIButton {
         }
 }
 
-class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITabBarDelegate, UITableViewDataSource {
+class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource {
     
     
     
+    @IBOutlet weak var descrpText: UITextField!
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var tableNotes: UITableView!
     @IBOutlet weak var myLabel: UILabel!
@@ -33,6 +34,8 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     let emotionArray: Array = ["Счастье", "Радость", "Веселье", "Гнев", "Грусть", "Апатия"]
     let rateArray: Array = [1,2,3,4,5,6,7,8,9,10]
+    var note:Note = .init()
+    var notesArray: Array<Note> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +44,7 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         ratePicker.delegate = self
         emotionPicker.dataSource = self
         ratePicker.dataSource = self
+        tableNotes.register(dailyTableViewCell.self, forCellReuseIdentifier: "indexCell")
         tableNotes.dataSource = self
         viewWillAppear: do {
             datePicker.maximumDate = Date()
@@ -50,6 +54,14 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     @IBAction func addNote(_ sender: Any) {
         plusButton.shake()
+        //tableView(<#T##tableView: UITableView##UITableView#>, cellForRowAt: <#T##IndexPath#>)
+       // let note: Notes
+//        note = emotionArray[emotionPicker.selectedRow(inComponent: 0)] + String(rateArray[ratePicker.selectedRow(inComponent: 0)]) + descrpText.text!
+        note.setNote(emotion: emotionArray[emotionPicker.selectedRow(inComponent: 0)], rate: rateArray[ratePicker.selectedRow(inComponent: 0)], desctiption: descrpText.text!)
+        notesArray.append(note)
+        tableNotes.beginUpdates()
+        tableNotes.insertRows(at: [IndexPath(row: notesArray.count-1, section: 0)], with: .automatic)
+        tableNotes.endUpdates()
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -65,6 +77,16 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             return 1
         }
     }
+    private func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) -> String {
+        switch pickerView {
+        case emotionPicker:
+            return emotionArray[row]
+        case ratePicker:
+            return String(rateArray[row])
+        default:
+            return "nothing"
+        }
+    }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
             switch pickerView {
@@ -78,12 +100,26 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if (notesArray.count == 0) {
+            return 0
+        }
+        else {
+            return notesArray.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "indexCell", for: indexPath) as! dairyTableViewCell
-        return cell
+        let newCell = tableView.dequeueReusableCell(withIdentifier: "indexCell", for: indexPath) as! dailyTableViewCell
+        if (notesArray.count != 0){
+            newCell.mycell.text = "dasda"
+            print(newCell.mycell.text)
+            //newCell.cell.text = "dasdasd"
+            //print(newCell.cell.text)
+            //newCell.cell.text = "dsadsa"
+          //  cell.setUp(emotion: notesArray[indexPath.row].emotion, rate: notesArray[indexPath.row].rate, description: notesArray[indexPath.row].description)
+        }
+        return newCell
+    }
     /*
     // MARK: - Navigation
 
@@ -95,10 +131,43 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     */
 
 }
-
-
-class Notes {
-    private var notesURL: URL {URL(string: "http://psy.desfeuers.ru/")!}
+class Note  {
+    var rate: Int
+    var emotion: String
+    var description: String
     
-    
+    func setNote(emotion em: String, rate r: Int, desctiption d:String){
+        self.emotion = em
+        self.rate = r
+        self.description = d
+    }
+    init(emotion em: String, rate r: Int, desctiption d:String){
+        self.emotion = em
+        self.rate = r
+        self.description = d
+    }
+    init() {
+        self.emotion = ""
+        self.rate = 0
+        self.description = ""
+    }
 }
+
+//final class Notes {
+//    private var notesURL: URL {URL(string: "http://psy.desfeuers.ru/list")!}
+//    private unowned var view: UIViewController
+//    var rate: Int
+//    var emotion: String
+//    var description: String
+//
+//    func setNote(emotion em: String, rate r: Int, desctiption d:String){
+//        self.emotion = em
+//        self.rate = r
+//        self.description = d
+//    }
+//    init(view: UIViewController){
+//        self.view = view
+//    }
+//
+//
+//}

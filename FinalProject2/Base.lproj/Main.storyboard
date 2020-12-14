@@ -119,15 +119,15 @@
                                 <rect key="frame" x="20" y="221" width="374" height="451"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="indexCell" id="rzH-gU-nOH" customClass="dairyTableViewCell" customModule="FinalProject2" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="indexCell" id="rzH-gU-nOH" customClass="dailyTableViewCell" customModule="FinalProject2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rzH-gU-nOH" id="A0A-d1-Sma">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AF-CO-Fy6">
-                                                    <rect key="frame" x="166" y="11.5" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHAT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AF-CO-Fy6" customClass="da">
+                                                    <rect key="frame" x="163" y="11.5" width="48.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -139,7 +139,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="cellNote" destination="2AF-CO-Fy6" id="eGe-0B-vGe"/>
+                                            <outlet property="mycell" destination="2AF-CO-Fy6" id="9qb-tT-p9E"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -201,6 +201,7 @@
                     <tabBarItem key="tabBarItem" title="Дневник" image="book" catalog="system" id="kYI-0v-GAa"/>
                     <connections>
                         <outlet property="datePicker" destination="uor-tm-4eS" id="wyX-w0-9sm"/>
+                        <outlet property="descrpText" destination="nZA-cI-JT3" id="3ed-oR-lNm"/>
                         <outlet property="emotionPicker" destination="nHv-QR-55G" id="lp9-lZ-wM9"/>
                         <outlet property="myLabel" destination="Grt-m2-8F1" id="igD-bl-iP1"/>
                         <outlet property="plusButton" destination="sMB-Sv-cXA" id="Qvu-rM-VaS"/>
@@ -245,9 +246,9 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiu-7Q-PIV">
-                                <rect key="frame" x="102" y="333" width="210" height="30"/>
+                                <rect key="frame" x="100" y="333" width="214" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.95791910979999995" blue="0.89398326620000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="  ИТОГИНА ТЕКУЩИЙ ДЕНЬ  ">
+                                <state key="normal" title="  ИТОГИ НА ТЕКУЩИЙ ДЕНЬ  ">
                                     <color key="titleColor" systemColor="labelColor"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
