@@ -7,22 +7,12 @@
 import Foundation
 import RealmSwift
 import UIKit
-
-
-extension UIButton {
-    func shake() {
-            let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-            animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-            animation.duration = 0.6
-            animation.values = [-10.0, 10.0, -10.0, 10.0, -5.0, 5.0, -2.0, 2.0, 0.0 ]
-            layer.add(animation, forKey: "shake")
-        }
-}
+//import Notes
 
 class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource {
     
     
-    
+    // MARK: - from StoryBoard
     @IBOutlet weak var descrpText: UITextField!
     @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var tableNotes: UITableView!
@@ -31,12 +21,14 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var emotionPicker: UIPickerView!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    
+    // MARK: - programm atributes
     let emotionArray: Array = ["Счастье", "Радость", "Веселье", "Гнев", "Грусть", "Апатия"]
     let rateArray: Array = [1,2,3,4,5,6,7,8,9,10]
     var note:Note = .init()
     var notesArray: Array<Note> = []
     
+    
+    // MARK: - only viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -44,25 +36,26 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         ratePicker.delegate = self
         emotionPicker.dataSource = self
         ratePicker.dataSource = self
-        tableNotes.register(dailyTableViewCell.self, forCellReuseIdentifier: "indexCell")
         tableNotes.dataSource = self
+        tableNotes.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "indexCell")
         viewWillAppear: do {
             datePicker.maximumDate = Date()
         }
-         //tableNotes.delegate = self
     }
     
+    
+    //MARK: - button func
     @IBAction func addNote(_ sender: Any) {
         plusButton.shake()
-        //tableView(<#T##tableView: UITableView##UITableView#>, cellForRowAt: <#T##IndexPath#>)
-       // let note: Notes
-//        note = emotionArray[emotionPicker.selectedRow(inComponent: 0)] + String(rateArray[ratePicker.selectedRow(inComponent: 0)]) + descrpText.text!
-        note.setNote(emotion: emotionArray[emotionPicker.selectedRow(inComponent: 0)], rate: rateArray[ratePicker.selectedRow(inComponent: 0)], desctiption: descrpText.text!)
+        note = .init(emotion: emotionArray[emotionPicker.selectedRow(inComponent: 0)], rate: rateArray[ratePicker.selectedRow(inComponent: 0)], desctiption: descrpText.text!)
         notesArray.append(note)
         tableNotes.beginUpdates()
         tableNotes.insertRows(at: [IndexPath(row: notesArray.count-1, section: 0)], with: .automatic)
         tableNotes.endUpdates()
     }
+    
+    
+    //MARK: - for UIPickerView
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -99,6 +92,8 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             }
         }
     
+    
+    //MARK: - for UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (notesArray.count == 0) {
             return 0
@@ -109,65 +104,19 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let newCell = tableView.dequeueReusableCell(withIdentifier: "indexCell", for: indexPath) as! dailyTableViewCell
-        if (notesArray.count != 0){
-            newCell.mycell.text = "dasda"
-            print(newCell.mycell.text)
-            //newCell.cell.text = "dasdasd"
-            //print(newCell.cell.text)
-            //newCell.cell.text = "dsadsa"
-          //  cell.setUp(emotion: notesArray[indexPath.row].emotion, rate: notesArray[indexPath.row].rate, description: notesArray[indexPath.row].description)
-        }
+        let newCell = tableView.dequeueReusableCell(withIdentifier: "indexCell", for: indexPath) as! TableViewCell
+        newCell.setUp(emotion: note.emotion, rate: note.rate, description: note.description)
         return newCell
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-class Note  {
-    var rate: Int
-    var emotion: String
-    var description: String
-    
-    func setNote(emotion em: String, rate r: Int, desctiption d:String){
-        self.emotion = em
-        self.rate = r
-        self.description = d
-    }
-    init(emotion em: String, rate r: Int, desctiption d:String){
-        self.emotion = em
-        self.rate = r
-        self.description = d
-    }
-    init() {
-        self.emotion = ""
-        self.rate = 0
-        self.description = ""
-    }
 }
 
-//final class Notes {
-//    private var notesURL: URL {URL(string: "http://psy.desfeuers.ru/list")!}
-//    private unowned var view: UIViewController
-//    var rate: Int
-//    var emotion: String
-//    var description: String
-//
-//    func setNote(emotion em: String, rate r: Int, desctiption d:String){
-//        self.emotion = em
-//        self.rate = r
-//        self.description = d
-//    }
-//    init(view: UIViewController){
-//        self.view = view
-//    }
-//
-//
-//}
+
+extension UIButton {
+    func shake() {
+            let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+            animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+            animation.duration = 0.6
+            animation.values = [-10.0, 10.0, -10.0, 10.0, -5.0, 5.0, -2.0, 2.0, 0.0 ]
+            layer.add(animation, forKey: "shake")
+        }
+}
