@@ -21,41 +21,28 @@ class LogInViewController: UIViewController {
     // var login: UserDefaults
    // var password: UserDefaults
     
-    @IBOutlet weak var myLabel: UILabel!
+ 
     //private lazy var newuser: newUser
     override func viewDidLoad() {
         super.viewDidLoad()
         signInButton.setProperties()
-        self.setBackGround()
-        myLabel.isUserInteractionEnabled = true
+        self.setBackGround()    
         // Do any additional setup after loading the view.
     }
     
     func logIN(){
         
     }
-    
-    @IBAction func sendToSignUp(_ sender: UITapGestureRecognizer) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "signUp") as! RegisterViewController
-        let appDelegate =  UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-        
-    }
-    
 }
 
 class BeginViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var signInButton: UIButton!
-    
     @IBOutlet weak var collectionView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBackGround()
+        self.setBackGround()
         collectionView.backgroundColor = self.view.backgroundColor
         signUpButton.setProperties()
         signInButton.setProperties()
@@ -67,24 +54,16 @@ class BeginViewController: UIViewController {
 
 class RegisterViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var myLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setBackGround()
         signUpButton.setProperties()
-        myLabel.isUserInteractionEnabled = true
         // Do any additional setup after loading the view.
-    }
-    @IBAction func sendToSignIn(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "logIn") as! LogInViewController
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-        
     }
     
 }
+
 
 
 extension UIButton {

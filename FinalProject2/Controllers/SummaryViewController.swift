@@ -9,6 +9,9 @@ import UIKit
 
 class SummaryViewController: UIViewController {
 
+    @IBOutlet weak var weekSum: UIButton!
+    @IBOutlet weak var nowSum: UIButton!
+    @IBOutlet weak var monthSum: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
