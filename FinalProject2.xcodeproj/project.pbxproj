@@ -15,6 +15,7 @@
 		04044B592582530900A0FAC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04044B572582530900A0FAC2 /* LaunchScreen.storyboard */; };
 		04044B74258254E300A0FAC2 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04044B73258254E300A0FAC2 /* SummaryViewController.swift */; };
 		04044B77258254F000A0FAC2 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04044B76258254F000A0FAC2 /* NotesViewController.swift */; };
+		04117FCD2590C43B00328BA5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04117FCC2590C43B00328BA5 /* GoogleService-Info.plist */; };
 		04D8347D2588D7A0008EFB03 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D8347B2588D7A0008EFB03 /* TableViewCell.swift */; };
 		04D8347E2588D7A0008EFB03 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04D8347C2588D7A0008EFB03 /* TableViewCell.xib */; };
 		04D834832588E54F008EFB03 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D834822588E54F008EFB03 /* Notes.swift */; };
@@ -32,6 +33,7 @@
 		04044B5A2582530900A0FAC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04044B73258254E300A0FAC2 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		04044B76258254F000A0FAC2 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		04117FCC2590C43B00328BA5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04D8347B2588D7A0008EFB03 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		04D8347C2588D7A0008EFB03 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		04D834822588E54F008EFB03 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				04044B572582530900A0FAC2 /* LaunchScreen.storyboard */,
 				04044B5A2582530900A0FAC2 /* Info.plist */,
 				04D834822588E54F008EFB03 /* Notes.swift */,
+				04117FCC2590C43B00328BA5 /* GoogleService-Info.plist */,
 			);
 			path = FinalProject2;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 			files = (
 				04044B592582530900A0FAC2 /* LaunchScreen.storyboard in Resources */,
 				04D8347E2588D7A0008EFB03 /* TableViewCell.xib in Resources */,
+				04117FCD2590C43B00328BA5 /* GoogleService-Info.plist in Resources */,
 				04044B562582530900A0FAC2 /* Assets.xcassets in Resources */,
 				04044B542582530800A0FAC2 /* Main.storyboard in Resources */,
 			);
@@ -398,7 +402,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = EkaterinaPolupanova.FinalProject2;
+				PRODUCT_BUNDLE_IDENTIFIER = EkaterinaPolupanova.PSYiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -418,7 +422,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = EkaterinaPolupanova.FinalProject2;
+				PRODUCT_BUNDLE_IDENTIFIER = EkaterinaPolupanova.PSYiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
