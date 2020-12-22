@@ -8,6 +8,9 @@ target 'FinalProject2' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  pod 'FirebaseUI/Storage'
+  pod 'Nuke'
   # Pods for FinalProject2
 
 end

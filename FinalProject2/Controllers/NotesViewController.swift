@@ -34,6 +34,7 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         emotionPicker.delegate = self
         ratePicker.delegate = self
         emotionPicker.dataSource = self
@@ -43,30 +44,44 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         viewWillAppear: do {
             datePicker.maximumDate = Date()
         }
-        
-        DataService.dataServise.REF_NOTES.observe(.value, with: {(snapshot) in
-            self.notesArray.removeAll()
-            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in snapshot {
-                    print(snap)
-                    if let noteData = snap.value as? [String: Any] {
-                        let note = Note(dictionary: noteData)
-                        self.notesArray.insert(note, at: 0)
-                        print(self.notesArray)
-                        note.snapkey = snap.key
+        datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
+        if REF_CURRENT_USER != nil {
+            DataService.dataServise.REF_NOTES.observe(.value, with: {(snapshot) in
+                self.notesArray.removeAll()
+                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in snapshot {
+                        if let noteData = snap.value as? [String: Any] {
+                            let note = Note(dictionary: noteData)
+                            self.notesArray.insert(note, at: 0)
+                            note.snapkey = snap.key
+                        }
                     }
-
                 }
-
-            }
-            self.tableNotes.reloadData()
-        })
+                self.tableNotes.reloadData()
+            })
+        }
     }
     
     
     //MARK: - button func
     @IBAction func editTable(_ sender: Any) {
         tableNotes.isEditing.toggle()
+    }
+
+    @objc func datePickerChanged(picker: UIDatePicker) {
+        DataService.dataServise.REF_NOTES.child("date").observe(.value, with: {(snapshot) in
+            self.notesArray.removeAll()
+            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                for snap in snapshot {
+                    if let noteData = snap.value as? [String: Any] {
+                        let note = Note(dictionary: noteData)
+                        self.notesArray.insert(note, at: 0)
+                        note.snapkey = snap.key
+                    }
+                }
+            }
+            self.tableNotes.reloadData()
+        })
     }
     @IBAction func addNote(_ sender: Any) {
         plusButton.shake()

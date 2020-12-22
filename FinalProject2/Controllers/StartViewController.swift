@@ -9,15 +9,23 @@ import UIKit
 import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
+import FirebaseStorage
+import FirebaseUI
+import Photos
+import PhotosUI
 
 class AuthViewController: UIViewController {
     
+    @IBOutlet weak var imageVIew: UIImageView!
+    @IBOutlet weak var buttonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var repasTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var repasLabel: UILabel!
     @IBOutlet weak var changebleLabel: UILabel!
     @IBOutlet weak var authButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var mainConstraint: NSLayoutConstraint!
+    
     var signin: Bool = true {
         willSet {
             if newValue{
@@ -36,12 +44,40 @@ class AuthViewController: UIViewController {
             }
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let ref = storageRef.child("IMG_5185.JPG")
+        imageVIew.sd_setImage(with: ref)
         signin = true
         self.setBackGround()
         authButton.setProperties()
         changebleLabel.isUserInteractionEnabled = true
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification){
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            buttonTopConstraint.constant = 80
+            mainConstraint.constant = -30
+            if signin { buttonTopConstraint.constant -= keyboardSize.height/2.5}
+            else {
+                mainConstraint.constant = -70
+                buttonTopConstraint.constant -= keyboardSize.height/4
+            }
+        }
+    }
+    @objc func keyboardWillHide(notification: NSNotification){
+        mainConstraint.constant = -30
+        buttonTopConstraint.constant = 80
+    }
+    @IBAction func tap(_ sender: UITapGestureRecognizer) {
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        repasTextField.resignFirstResponder()
     }
     @IBAction func auth(_ sender: Any) {
         let email = emailTextField.text!
