@@ -8,7 +8,7 @@ import UIKit
 import Foundation
 import Firebase
 let URL_BASE = Database.database().reference()
-let REF_CURRENT_USER = Auth.auth().currentUser?.uid
+var REF_CURRENT_USER = Auth.auth().currentUser?.uid
 class DataService {
     static let dataServise = DataService()
 

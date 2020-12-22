@@ -33,7 +33,7 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        REF_CURRENT_USER = Auth.auth().currentUser?.uid
         emotionPicker.delegate = self
         ratePicker.delegate = self
         emotionPicker.dataSource = self
@@ -44,10 +44,12 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             datePicker.maximumDate = Date()
         }
         datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
         stringDate()
         loadTable()
     }
-    
     
     //MARK: - button func
     @IBAction func editTable(_ sender: Any) {
@@ -76,7 +78,6 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @objc func datePickerChanged(picker: UIDatePicker) {
         stringDate()
         loadTable()
-        
     }
     
     func stringDate() {
@@ -168,7 +169,6 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
 
 }
-
 
 extension UIButton {
     func shake() {

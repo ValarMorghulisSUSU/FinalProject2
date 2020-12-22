@@ -11,12 +11,12 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseUI
-import Photos
-import PhotosUI
+import Nuke
 
 class AuthViewController: UIViewController {
     
-    @IBOutlet weak var imageVIew: UIImageView!
+    @IBOutlet weak var label: UILabel!
+    
     @IBOutlet weak var buttonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var repasTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -29,14 +29,14 @@ class AuthViewController: UIViewController {
     var signin: Bool = true {
         willSet {
             if newValue{
-                title = "Вход"
+                label.text = "  ВХОД  "
                 repasLabel.isHidden = true
                 repasTextField.isHidden = true
                 authButton.setTitle("  ВОЙТИ  ", for: .normal)
                 changebleLabel.text = "Ещё нет аккаунта ? Зарегистрируйстесь."
             }
             else {
-                title = "Регистрация"
+                label.text = "  РЕГИСТРАЦИЯ  "
                 repasLabel.isHidden = false
                 repasTextField.isHidden = false
                 authButton.setTitle("  ЗАРЕГИСТРИРОВАТЬСЯ  ", for: .normal)
@@ -47,10 +47,6 @@ class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let storage = Storage.storage()
-        let storageRef = storage.reference()
-        let ref = storageRef.child("IMG_20201222_153942_190.png")
-        imageVIew.sd_setImage(with: ref)
         signin = true
         self.setBackGround()
         authButton.setProperties()
