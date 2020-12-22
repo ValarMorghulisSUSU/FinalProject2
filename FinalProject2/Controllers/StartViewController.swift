@@ -49,7 +49,7 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
         let storage = Storage.storage()
         let storageRef = storage.reference()
-        let ref = storageRef.child("IMG_5185.JPG")
+        let ref = storageRef.child("IMG_20201222_153942_190.png")
         imageVIew.sd_setImage(with: ref)
         signin = true
         self.setBackGround()

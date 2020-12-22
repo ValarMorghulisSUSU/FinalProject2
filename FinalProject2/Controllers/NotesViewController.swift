@@ -5,10 +5,8 @@
 //  Created by Mac on 10.12.2020.
 //
 import Foundation
-import RealmSwift
 import UIKit
 import Firebase
-//import Notes
 
 class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource {
     
@@ -28,6 +26,7 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     //var note:Note = .init()
     var newNote: [String: Any] = [:]
     var notesArray = [Note]()
+    var date: String = ""
     
     
     // MARK: - only viewDidLoad
@@ -45,21 +44,8 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             datePicker.maximumDate = Date()
         }
         datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
-        if REF_CURRENT_USER != nil {
-            DataService.dataServise.REF_NOTES.observe(.value, with: {(snapshot) in
-                self.notesArray.removeAll()
-                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                    for snap in snapshot {
-                        if let noteData = snap.value as? [String: Any] {
-                            let note = Note(dictionary: noteData)
-                            self.notesArray.insert(note, at: 0)
-                            note.snapkey = snap.key
-                        }
-                    }
-                }
-                self.tableNotes.reloadData()
-            })
-        }
+        stringDate()
+        loadTable()
     }
     
     
@@ -67,21 +53,37 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBAction func editTable(_ sender: Any) {
         tableNotes.isEditing.toggle()
     }
-
-    @objc func datePickerChanged(picker: UIDatePicker) {
-        DataService.dataServise.REF_NOTES.child("date").observe(.value, with: {(snapshot) in
-            self.notesArray.removeAll()
-            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in snapshot {
-                    if let noteData = snap.value as? [String: Any] {
-                        let note = Note(dictionary: noteData)
-                        self.notesArray.insert(note, at: 0)
-                        note.snapkey = snap.key
+    
+    func loadTable(){
+        if REF_CURRENT_USER != nil {
+            DataService.dataServise.REF_NOTES.observe(.value, with: {(snapshot) in
+                self.notesArray.removeAll()
+                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in snapshot {
+                        if let noteData = snap.value as? [String: Any] {
+                            let note = Note(dictionary: noteData)
+                            if note.date == self.date{
+                                self.notesArray.insert(note, at: 0)
+                                note.snapkey = snap.key
+                            }
+                        }
                     }
                 }
-            }
-            self.tableNotes.reloadData()
-        })
+                self.tableNotes.reloadData()
+            })
+        }
+    }
+    @objc func datePickerChanged(picker: UIDatePicker) {
+        stringDate()
+        loadTable()
+        
+    }
+    
+    func stringDate() {
+        let day = datePicker.calendar.component(.day, from: datePicker.date)
+        let month = datePicker.calendar.component(.month, from: datePicker.date)
+        let year = datePicker.calendar.component(.year, from: datePicker.date)
+        self.date = "\(day).\(month).\(year)"
     }
     @IBAction func addNote(_ sender: Any) {
         plusButton.shake()
@@ -94,12 +96,8 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             "rate": rateArray[ratePicker.selectedRow(inComponent: 0)],
             "description": descrpText.text!
         ]
-       // notesArray.append(note)
-        //tableNotes.clearsContextBeforeDrawing = true
         DataService.dataServise.createNewNote(note: newNote)
-//        self.notesArray.append(note)
-//        //print(self.notesArray)
-//        self.tableNotes.reloadData()
+
     }
     
     
