@@ -9,9 +9,7 @@ import UIKit
 import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
-import FirebaseStorage
-import FirebaseUI
-import Nuke
+import Firebase
 
 class AuthViewController: UIViewController {
     
