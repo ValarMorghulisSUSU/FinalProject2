@@ -12,12 +12,9 @@ import FirebaseDatabase
 
 class AuthViewController: UIViewController {
     
-    @State var status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
     @IBOutlet weak var repasTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var repasLabel: UILabel!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var changebleLabel: UILabel!
     @IBOutlet weak var authButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -25,8 +22,6 @@ class AuthViewController: UIViewController {
         willSet {
             if newValue{
                 title = "Вход"
-                nameLabel.isHidden = true
-                nameTextField.isHidden = true
                 repasLabel.isHidden = true
                 repasTextField.isHidden = true
                 authButton.setTitle("  ВОЙТИ  ", for: .normal)
@@ -34,8 +29,6 @@ class AuthViewController: UIViewController {
             }
             else {
                 title = "Регистрация"
-                nameLabel.isHidden = false
-                nameTextField.isHidden = false
                 repasLabel.isHidden = false
                 repasTextField.isHidden = false
                 authButton.setTitle("  ЗАРЕГИСТРИРОВАТЬСЯ  ", for: .normal)
@@ -51,7 +44,6 @@ class AuthViewController: UIViewController {
         changebleLabel.isUserInteractionEnabled = true
     }
     @IBAction func auth(_ sender: Any) {
-        let name = nameTextField.text!
         let email = emailTextField.text!
         let password = passwordTextField.text!
         let repassword = repasTextField.text!
@@ -59,18 +51,18 @@ class AuthViewController: UIViewController {
             if (!email.isEmpty && !password.isEmpty) {
                 Auth.auth().signIn(withEmail: email, password: password, completion:
                                     { (result, error) in
-                                        if error == nil { self.dismiss(animated: true, completion: nil) }
-                                        
+                                        if error == nil {self.dismiss(animated: true, completion: nil)
+                                    }
                                     })
             } else {showAlert(message: "Заполните все поля") }
         } else {
-            if(!name.isEmpty && !email.isEmpty && !password.isEmpty && !repassword.isEmpty && password == repassword) {
+            if(!email.isEmpty && !password.isEmpty && !repassword.isEmpty && password == repassword) {
                 Auth.auth().createUser(withEmail: email, password: password, completion:
                                         { (result, error) in
                                             if error == nil {
                                                 if let result = result {
                                                     let ref = Database.database().reference().child("users")
-                                                    ref.child(result.user.uid).updateChildValues(["name": name,"email": email ])
+                                                    ref.child(result.user.uid).updateChildValues(["email": email])
                                                     self.dismiss(animated: true, completion: nil)
                                                 }
                                             } else {self.showAlert(message: error.debugDescription)}

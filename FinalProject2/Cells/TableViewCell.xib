@@ -30,6 +30,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <gestureRecognizers/>
             <connections>
                 <outlet property="customNote" destination="RHT-V4-hzt" id="oBq-6A-81f"/>
             </connections>
