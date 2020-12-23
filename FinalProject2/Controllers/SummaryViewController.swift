@@ -21,10 +21,10 @@ class SummaryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setBackGround()
-        loadData.setProperties()
-        sum.setProperties()
-        logoutButton.setProperties()
+        self.setCustomBackGroundColor()
+        loadData.setCustomProperties()
+        sum.setCustomProperties()
+        logoutButton.setCustomProperties()
         if UserDefaults.standard.string(forKey: "LIST_OF_EM") != "" { self.listOftenEmotions.text = UserDefaults.standard.string(forKey: "LIST_OF_EM") }
     }
     
@@ -40,23 +40,21 @@ class SummaryViewController: UIViewController {
                     for snap in snapshot {
                         if let noteData = snap.value as? [String: Any] {
                             let note = Note(dictionary: noteData)
-                            if note.emotion == "Счастье" { self.emotionArray[0] += 1}
-                            if note.emotion == "Радость"{ self.emotionArray[1] += 1 }
-                            if note.emotion == "Веселье" { self.emotionArray[2] += 1 }
-                            if note.emotion == "Гнев" { self.emotionArray[3] += 1 }
-                            if note.emotion == "Грусть" { self.emotionArray[4] += 1 }
-                            if note.emotion == "Апатия"{ self.emotionArray[5] += 1 }
+                            switch note.emotion {
+                            case "Счастье": self.emotionArray[0] += 1
+                            case "Радость": self.emotionArray[1] += 1
+                            case "Веселье": self.emotionArray[2] += 1
+                            case "Гнев": self.emotionArray[3] += 1
+                            case "Грусть": self.emotionArray[4] += 1
+                            case "Апатия": self.emotionArray[5] += 1
+                            default:
+                                break
+                            }
                         }
                     }
                 }
             })
         }
-    }
-    
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func makeSum(_ sender: UIButton) {
@@ -92,7 +90,7 @@ class SummaryViewController: UIViewController {
             self.isLoad = false
         }
         else {
-            showAlert(message: "Загрузите данные")
+            showErrorAlert(message: "Загрузите данные")
         }
     }
     

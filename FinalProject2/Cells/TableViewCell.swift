@@ -14,10 +14,12 @@ class TableViewCell: UITableViewCell {
     
     func setUp(emotion em:String, rate re: Int, description d: String){
         if (re>0 && re < 5) {
-        customNote.text! = (em + " - " + "\(re) балл - " + d)
+            if (d == "") { customNote.text = (em + " - " + "\(re) балл") }
+            else { customNote.text = (em + " - " + "\(re) балл - " + d) }
         }
         else {
-        customNote.text! = (em + " - " + "\(re) баллов - " + d)
+            if (d == "") { customNote.text = (em + " - " + "\(re) баллов") }
+            else { customNote.text = (em + " - " + "\(re) баллов - " + d) }
         }
     }
     

@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 import Firebase
 
-class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource {
+class NotesViewController: UIViewController {
     
     
     // MARK: - from StoryBoard
@@ -33,7 +33,8 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        REF_CURRENT_USER = Auth.auth().currentUser?.uid
+        
+        self.setCustomBackGroundColor()
         emotionPicker.delegate = self
         ratePicker.delegate = self
         emotionPicker.dataSource = self
@@ -47,6 +48,7 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
     }
     override func viewWillAppear(_ animated: Bool) {
+        if REF_CURRENT_USER == nil { REF_CURRENT_USER = Auth.auth().currentUser?.uid }
         stringDate()
         loadTable()
     }
@@ -95,87 +97,13 @@ class NotesViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             "date": "\(day).\(month).\(year)",
             "emotion": emotionArray[emotionPicker.selectedRow(inComponent: 0)],
             "rate": rateArray[ratePicker.selectedRow(inComponent: 0)],
-            "description": descrpText.text!
+            "description": descrpText.text ?? ""
         ]
         DataService.dataServise.createNewNote(note: newNote)
 
     }
-    
-    
-    //MARK: - for UIPickerView
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch pickerView {
-        case emotionPicker:
-            return emotionArray.count
-        case ratePicker:
-            return rateArray.count
-        default:
-            return 1
-        }
-    }
-    private func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) -> String {
-        switch pickerView {
-        case emotionPicker:
-            return emotionArray[row]
-        case ratePicker:
-            return String(rateArray[row])
-        default:
-            return "nothing"
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            switch pickerView {
-            case emotionPicker:
-                return emotionArray[row]
-            case ratePicker:
-                return String(rateArray[row])
-            default:
-                return "nothing"
-            }
-        }
-    
-    
-    //MARK: - for UITableView
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (notesArray.count == 0) {
-            return 0
-        }
-        else {
-            return notesArray.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var note: Note!
-        note = notesArray[indexPath.row]
-        if let newCell = tableView.dequeueReusableCell(withIdentifier: "indexCell", for: indexPath) as? TableViewCell {
-            newCell.setUp(emotion: note.emotion, rate: note.rate, description: note.description)
-            return newCell }
-        else {
-            return TableViewCell()
-        }
-    }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            DataService.dataServise.deleteNote(key: notesArray[indexPath.row].snapkey)
-            notesArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .left)
-        }
-    }
-
 }
 
-extension UIButton {
-    func shake() {
-            let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-            animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-            animation.duration = 0.6
-            animation.values = [-10.0, 10.0, -10.0, 10.0, -5.0, 5.0, -2.0, 2.0, 0.0 ]
-            layer.add(animation, forKey: "shake")
-        }
-}
+
+
+

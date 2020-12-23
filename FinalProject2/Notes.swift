@@ -4,11 +4,13 @@
 //
 //  Created by Mac on 15.12.2020.
 //
+
 import UIKit
 import Foundation
 import Firebase
 let URL_BASE = Database.database().reference()
 var REF_CURRENT_USER = Auth.auth().currentUser?.uid
+
 class DataService {
     static let dataServise = DataService()
 
@@ -45,20 +47,3 @@ final class Note  {
     }
 }
 
-
-
-//final class Notes {
-//    private var notesURL: URL {URL(string: "http://psy.desfeuers.ru/list")!}
-//    private unowned var view: UIViewController
-//    var rate: Int
-//    var emotion: String
-//    var description: String
-//
-//    func setNote(emotion em: String, rate r: Int, desctiption d:String){
-//        self.emotion = em
-//        self.rate = r
-//        self.description = d
-//    }
-//
-//
-//}

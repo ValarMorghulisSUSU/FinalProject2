@@ -10,12 +10,16 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
 import Firebase
-
+import FirebaseStorage
+import FirebaseUI
+enum Authentication {
+    case login
+    case signup
+}
 class AuthViewController: UIViewController {
     
-    @IBOutlet weak var label: UILabel!
-    
-    @IBOutlet weak var buttonTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageVIew: UIImageView!
+    @IBOutlet weak var buttonBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var repasTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var repasLabel: UILabel!
@@ -24,50 +28,47 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var mainConstraint: NSLayoutConstraint!
     
-    var signin: Bool = true {
-        willSet {
-            if newValue{
-                label.text = "  ВХОД  "
-                repasLabel.isHidden = true
-                repasTextField.isHidden = true
-                authButton.setTitle("  ВОЙТИ  ", for: .normal)
-                changebleLabel.text = "Ещё нет аккаунта ? Зарегистрируйстесь."
-            }
-            else {
-                label.text = "  РЕГИСТРАЦИЯ  "
-                repasLabel.isHidden = false
-                repasTextField.isHidden = false
-                authButton.setTitle("  ЗАРЕГИСТРИРОВАТЬСЯ  ", for: .normal)
-                changebleLabel.text = "Уже есть аккаунт ? Войдите."
-            }
-        }
-    }
+    var state: Authentication = .login
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        signin = true
-        self.setBackGround()
-        authButton.setProperties()
+        let storage = Storage.storage()
+        let sref = storage.reference()
+        let ref = sref.child("IMG_5185-removebg.png")
+        imageVIew.sd_setImage(with: ref)
+        redrawView()
+        self.setCustomBackGroundColor()
+        authButton.setCustomProperties()
         changebleLabel.isUserInteractionEnabled = true
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
+    
+    //MARK: - for keyboard
     @objc func keyboardWillShow(notification: NSNotification){
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            buttonTopConstraint.constant = 80
+            buttonBottomConstraint.constant = 100
             mainConstraint.constant = -30
-            if signin { buttonTopConstraint.constant -= keyboardSize.height/2.5}
+            if state == .login {
+                mainConstraint.constant = -70
+                buttonBottomConstraint.constant = keyboardSize.height
+                
+            }
             else {
                 mainConstraint.constant = -70
-                buttonTopConstraint.constant -= keyboardSize.height/4
+                buttonBottomConstraint.constant = keyboardSize.height
             }
         }
     }
     @objc func keyboardWillHide(notification: NSNotification){
         mainConstraint.constant = -30
-        buttonTopConstraint.constant = 80
+        buttonBottomConstraint.constant = 100
     }
+    
+    
+    
+    //MARK: - @IBAcrion
     @IBAction func tap(_ sender: UITapGestureRecognizer) {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
@@ -77,16 +78,17 @@ class AuthViewController: UIViewController {
         let email = emailTextField.text!
         let password = passwordTextField.text!
         let repassword = repasTextField.text!
-        if (signin) {
+        if state == .login {
             if (!email.isEmpty && !password.isEmpty) {
                 Auth.auth().signIn(withEmail: email, password: password, completion:
                                     { (result, error) in
                                         if error == nil {self.dismiss(animated: true, completion: nil)
                                     }
                                     })
-            } else {showAlert(message: "Заполните все поля") }
+            } else {showErrorAlert(message: "Заполните все поля") }
         } else {
-            if(!email.isEmpty && !password.isEmpty && !repassword.isEmpty && password == repassword) {
+            if(!email.isEmpty && !password.isEmpty && !repassword.isEmpty) {
+                if ( password == repassword ) {
                 Auth.auth().createUser(withEmail: email, password: password, completion:
                                         { (result, error) in
                                             if error == nil {
@@ -95,41 +97,39 @@ class AuthViewController: UIViewController {
                                                     ref.child(result.user.uid).updateChildValues(["email": email])
                                                     self.dismiss(animated: true, completion: nil)
                                                 }
-                                            } else {self.showAlert(message: error.debugDescription)}
+                                            } else {self.showErrorAlert(message: error.debugDescription)}
                                         })
+                } else { showErrorAlert(message: "Пароли не совпадают")}
             }
-            else { showAlert(message: "Заполните все поля или проверьте совпадение паролей") }
+            else { showErrorAlert(message: "Заполните все поля") }
         }
     }
     
     
     @IBAction func changeAuth(_ sender: UITapGestureRecognizer) {
-        signin.toggle()
+        if state == .login { state = .signup }
+        else { state = .login }
+        redrawView()
     }
     
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+    //MARK: - for change enum
+    
+    func redrawView(){
+        switch state {
+        case .login:
+            repasLabel.isHidden = true
+            repasTextField.isHidden = true
+            authButton.setTitle("  ВОЙТИ  ", for: .normal)
+            changebleLabel.text = "Ещё нет аккаунта ? Зарегистрируйстесь."
+        case .signup:
+            repasLabel.isHidden = false
+            repasTextField.isHidden = false
+            authButton.setTitle("  ЗАРЕГИСТРИРОВАТЬСЯ  ", for: .normal)
+            changebleLabel.text = "Уже есть аккаунт ? Войдите."
+        }
     }
 }
 
-extension UIButton {
-    
-    func setProperties() {
-        self.layer.cornerRadius = 10
-        self.layer.borderWidth = 2
-        self.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 1)
-        self.backgroundColor = #colorLiteral(red: 0.3349651098, green: 0.24038589, blue: 0.1995852292, alpha: 1)
-        self.setTitleColor(.white, for: UIControl.State.normal)
-    }
-}
 
-extension UIViewController {
-    
-    func setBackGround() {
-        self.view.backgroundColor = #colorLiteral(red: 1, green: 0.8443579078, blue: 0.7095828652, alpha: 1)
-    }
-}
 
 
